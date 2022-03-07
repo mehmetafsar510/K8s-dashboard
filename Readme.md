@@ -9,7 +9,7 @@ It allows users to manage applications running in the cluster and troubleshoot t
 # Add kubernetes-dashboard repository
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 # Deploy a Helm Release named "my-release" using the kubernetes-dashboard chart
-helm install my-release kubernetes-dashboard/kubernetes-dashboard
+helm install my-release kubernetes-dashboard/kubernetes-dashboard -n kubernetes-dashboard
 ```
 
 ## Introduction
@@ -22,11 +22,28 @@ To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts
 
 ```console
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -n kubernetes-dashboard
 ```
 
 The command deploys kubernetes-dashboard on the Kubernetes cluster in the default configuration.
 The [configuration](#configuration) section lists the parameters that can be configured during installation.
+
+## Extend token expiration 
+
+Extend token expiration deployment:
+
+```console
+k edit deployment kdashboard-kubernetes-dashboard -n kubernetes-dashboard
+spec:
+      containers:
+      - args:
+        - --namespace=kubernetes-dashboard
+        - --auto-generate-certificates
+        - --metrics-provider=none
+        - --token-ttl=0
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Uninstalling the Chart
 
