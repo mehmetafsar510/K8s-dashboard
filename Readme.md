@@ -43,7 +43,7 @@ spec:
         - --token-ttl=0
 ```
 
-The command removes all the Kubernetes components associated with the chart and deletes the release.
+This can extent your token time. You can login your dashboard with the same token.
 
 ## Uninstalling the Chart
 
